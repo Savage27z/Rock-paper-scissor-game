@@ -1,8 +1,17 @@
-kord_ai-Ko1wg1y9VLwQY6fw
-2349160574996
-private
-.
-Africa/Lagos
-savage
-savage
-rnd_PJ30pR2EwEWpeCbSqMmTWR8CP2fJ
+services:
+  - type: web
+    plan: free
+    name: django-app
+    runtime: python
+    repo: https://github.com/render-examples/django.git
+    buildCommand: './build.sh'
+    startCommand: 'python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: django-app-db
+          property: connectionString
+
+databases:
+  - name: django-app-db
+    plan: free
